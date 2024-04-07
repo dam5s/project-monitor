@@ -41,14 +41,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.18.0"
-  cupertino_icons:
-    dependency: "direct main"
-    description:
-      name: cupertino_icons
-      sha256: d57953e10f9f8327ce64a508a355f0b1ec902193f66288e8cb5070e7c47eeb2d
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.6"
   fake_async:
     dependency: transitive
     description:
@@ -74,6 +66,13 @@ packages:
     dependency: "direct dev"
     description: flutter
     source: sdk
+    version: "0.0.0"
+  http_support:
+    dependency: "direct main"
+    description:
+      path: "../../pkgs/http_support"
+      relative: true
+    source: path
     version: "0.0.0"
   leak_tracker:
     dependency: transitive
@@ -139,6 +138,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.0"
+  prelude:
+    dependency: "direct main"
+    description:
+      path: "../../pkgs/prelude"
+      relative: true
+    source: path
+    version: "0.0.0"
   sky_engine:
     dependency: transitive
     description: flutter

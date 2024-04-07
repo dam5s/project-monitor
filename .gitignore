@@ -1,9 +1,18 @@
+# IntelliJ
 .idea
-**/ios/Flutter/.last_build_id
+*.iml
 
-.dart_tool/
+# MacOS
+.DS_Store
+
+# Dart & Flutter
+build
+.dart_tool
+.dart_frog
 .flutter-plugins
 .flutter-plugins-dependencies
-.pub-cache/
-.pub/
-build/
+.pub-cache
+.pub
+
+# Melos
+pubspec_overrides.yaml

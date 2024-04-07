@@ -1,0 +1,18 @@
+name: project-monitor
+
+packages:
+  - apps/*
+  - pkgs/*
+
+scripts:
+  format:
+    run: dart format . --line-length 100 --set-exit-if-changed
+
+  install:
+    exec: flutter pub get
+
+  test:
+    exec: flutter test
+
+  cyclic_dependency_checks:
+    run: dart run cyclic_dependency_checks -m .

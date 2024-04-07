@@ -1,0 +1,15 @@
+name: project_monitor_server
+publish_to: none
+
+environment:
+  sdk: ^3.3.0
+
+dependencies:
+  prelude: 0.0.0
+  http_support: 0.0.0
+  shelf: ^1.4.1
+  shelf_hotreload: ^1.5.0
+
+dev_dependencies:
+  lints: ^3.0.0
+  test: ^1.24.0
