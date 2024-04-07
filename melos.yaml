@@ -4,6 +4,15 @@ packages:
   - apps/*
   - pkgs/*
 
+command:
+  bootstrap:
+    environment:
+      sdk: ^3.3.0
+
+    dev_dependencies:
+      flutter_lints: ^3.0.0
+      test: ^1.24.0
+
 scripts:
   format:
     run: dart format . --line-length 100 --set-exit-if-changed

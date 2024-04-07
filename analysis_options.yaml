@@ -1,0 +1,15 @@
+# https://dart.dev/tools/analysis
+
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  rules:
+    - always_declare_return_types
+
+analyzer:
+  language:
+    strict-casts: true
+    strict-inference: true
+    strict-raw-types: true
+  errors:
+    always_declare_return_types: error
