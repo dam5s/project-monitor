@@ -5,9 +5,15 @@ class UUID {
 
   UUID._(this.value);
 
-  factory UUID.fromString(String value) {
-    // TODO validate
-    return UUID._(value);
+  static UUID? tryFromString(String value) {
+    final normalizedValue = value.toLowerCase();
+
+    final matches = _v4Format.hasMatch(normalizedValue);
+    if (!matches) {
+      return null;
+    }
+
+    return UUID._(normalizedValue);
   }
 
   factory UUID.v4() {
@@ -22,6 +28,8 @@ class UUID {
   @override
   int get hashCode => value.hashCode;
 }
+
+final _v4Format = RegExp(r'^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}$');
 
 class _Generator {
   final Random _random = Random();
