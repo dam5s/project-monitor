@@ -12,8 +12,8 @@ extension TestScenarios on TestServer {
   Future<List<ProjectRecord>> loadSomeProjects() async {
     final repo = dependencies.projects;
     return [
-      (await repo.create(ProjectFields(name: 'Project #0'))).orThrow(),
-      (await repo.create(ProjectFields(name: 'Project #1'))).orThrow(),
+      (await repo.tryCreate(ProjectFields(name: 'Project #0'))).orThrow(),
+      (await repo.tryCreate(ProjectFields(name: 'Project #1'))).orThrow(),
     ];
   }
 }

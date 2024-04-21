@@ -8,21 +8,18 @@ import 'package:project_monitor_server/shelf_support/responses.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 
-dynamic _projectJson(ProjectRecord project) =>
-    {'id': project.id.value, 'name': project.name};
+dynamic _projectJson(ProjectRecord project) => {'id': project.id.value, 'name': project.name};
 
 dynamic _listJson(Iterable<ProjectRecord> records) =>
     {'projects': records.map(_projectJson).toList()};
 
 extension ProjectFieldsSerialization on ProjectFields {
-
   static ProjectFields fromJson(JsonDecoder decoder) {
     return ProjectFields(name: decoder.field('name'));
   }
 }
 
 extension RequestJson on Request {
-
   Future<Result<T, String>> tryParse<T>(JsonDecode<T> decode) async {
     try {
       final body = await readAsString();
@@ -54,23 +51,11 @@ Future<Handler> buildProjectsHandler(ProjectsRepo repo) async {
       return Responses.json(_projectJson(project));
     })
     ..post('/', (Request request) async {
-      final fieldsResult = await request.tryParse(ProjectFieldsSerialization.fromJson);
-
-      switch (fieldsResult) {
-        case Ok(value: final fields):
-          final persistenceResult = await repo.create(fields);
-
-          switch (persistenceResult) {
-            case Ok(value: final record):
-              return Responses.json(_projectJson(record), code: HttpStatus.created);
-
-            case Err(:final error):
-              return Responses.json({'error': 'Persistence failed, $error'}, code: HttpStatus.badRequest);
-          }
-
-        case Err(:final error):
-          return Responses.json({'error': error}, code: HttpStatus.badRequest);
-      }
+      return request
+          .tryParse(ProjectFieldsSerialization.fromJson)
+          .flatMapOk((fields) => repo.tryCreate(fields))
+          .mapOk((record) => Responses.json(_projectJson(record), code: HttpStatus.created))
+          .orElse((error) => Responses.json({'error': error}, code: HttpStatus.badRequest));
     })
     ..put('/<id>', (request, String id) {
       // update

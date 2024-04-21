@@ -2,21 +2,13 @@ import 'package:prelude/prelude.dart';
 
 import 'project_record.dart';
 
-sealed class ProjectPersistenceError {}
-
-final class ProjectNameUniquenessViolation implements ProjectPersistenceError {
-  final ProjectRecord existing;
-
-  ProjectNameUniquenessViolation(this.existing);
-}
-
 final class ProjectsRepo {
   var _records = List<ProjectRecord>.empty(growable: true);
 
-  Future<Result<ProjectRecord, ProjectPersistenceError>> create(ProjectFields fields) async {
+  Future<Result<ProjectRecord, String>> tryCreate(ProjectFields fields) async {
     final existing = await tryFindByName(fields.name);
     if (existing != null) {
-      return Err(ProjectNameUniquenessViolation(existing));
+      return const Err('Project with name already exists');
     }
 
     final record = ProjectRecord.fromFields(fields);
