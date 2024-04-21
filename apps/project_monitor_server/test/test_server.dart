@@ -21,15 +21,19 @@ class TestServer {
     return TestServer._(server, dependencies);
   }
 
-  Future<Response?> request(HttpMethod method, String path) async =>
-      _clientProvider.withHttpClient((client) async {
-        final result = await client.sendRequest(
-          HttpMethod.get,
-          Uri.parse('http://localhost:${_server.port}$path'),
-        );
+  Uri _url(String path) => Uri.parse('http://localhost:${_server.port}$path');
 
+  Future<Response?> _request(HttpRequest request) async =>
+      _clientProvider.withHttpClient((client) async {
+        final result = await client.sendRequest(request);
         return result.orNull();
       });
+
+  Future<Response?> get(String path) async => //
+      _request(HttpGet(_url(path)));
+
+  Future<Response?> post(String path, {dynamic body}) async => //
+      _request(HttpPost(_url(path), body: body));
 
   Future<void> close() {
     return _server.close();

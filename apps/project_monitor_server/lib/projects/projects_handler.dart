@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:http_support/http_support.dart';
 import 'package:prelude/prelude.dart';
 import 'package:project_monitor_server/projects/project_record.dart';
 import 'package:project_monitor_server/projects/projects_repo.dart';
@@ -11,13 +14,33 @@ dynamic _projectJson(ProjectRecord project) =>
 dynamic _listJson(Iterable<ProjectRecord> records) =>
     {'projects': records.map(_projectJson).toList()};
 
+extension ProjectFieldsSerialization on ProjectFields {
+
+  static ProjectFields fromJson(JsonDecoder decoder) {
+    return ProjectFields(name: decoder.field('name'));
+  }
+}
+
+extension RequestJson on Request {
+
+  Future<Result<T, String>> tryParse<T>(JsonDecode<T> decode) async {
+    try {
+      final body = await readAsString();
+      final decoder = JsonDecoder.fromString(body);
+      return Ok(decode(decoder));
+    } on TypeError catch (e) {
+      return Err('Failed to parse json $e');
+    }
+  }
+}
+
 Future<Handler> buildProjectsHandler(ProjectsRepo repo) async {
   final router = Router()
-    ..get('/', (request) async {
+    ..get('/', (Request request) async {
       final projects = await repo.findAll();
       return Responses.json(_listJson(projects));
     })
-    ..get('/<id>', (request, String id) async {
+    ..get('/<id>', (Request request, String id) async {
       final projectId = UUID.tryFromString(id);
       if (projectId == null) {
         return Response.notFound(null);
@@ -30,8 +53,24 @@ Future<Handler> buildProjectsHandler(ProjectsRepo repo) async {
 
       return Responses.json(_projectJson(project));
     })
-    ..post('/', (request) {
-      // create
+    ..post('/', (Request request) async {
+      final fieldsResult = await request.tryParse(ProjectFieldsSerialization.fromJson);
+
+      switch (fieldsResult) {
+        case Ok(value: final fields):
+          final persistenceResult = await repo.create(fields);
+
+          switch (persistenceResult) {
+            case Ok(value: final record):
+              return Responses.json(_projectJson(record), code: HttpStatus.created);
+
+            case Err(:final error):
+              return Responses.json({'error': 'Persistence failed, $error'}, code: HttpStatus.badRequest);
+          }
+
+        case Err(:final error):
+          return Responses.json({'error': error}, code: HttpStatus.badRequest);
+      }
     })
     ..put('/<id>', (request, String id) {
       // update

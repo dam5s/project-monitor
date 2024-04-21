@@ -2,13 +2,27 @@ import 'package:prelude/prelude.dart';
 
 import 'project_record.dart';
 
+sealed class ProjectPersistenceError {}
+
+final class ProjectNameUniquenessViolation implements ProjectPersistenceError {
+  final ProjectRecord existing;
+
+  ProjectNameUniquenessViolation(this.existing);
+}
+
 final class ProjectsRepo {
   var _records = List<ProjectRecord>.empty(growable: true);
 
-  Future<ProjectRecord> create(ProjectFields fields) async {
+  Future<Result<ProjectRecord, ProjectPersistenceError>> create(ProjectFields fields) async {
+    final existing = await tryFindByName(fields.name);
+    if (existing != null) {
+      return Err(ProjectNameUniquenessViolation(existing));
+    }
+
     final record = ProjectRecord.fromFields(fields);
     _records.add(record);
-    return record;
+
+    return Ok(record);
   }
 
   Future<Iterable<ProjectRecord>> findAll() async => //
@@ -16,6 +30,9 @@ final class ProjectsRepo {
 
   Future<ProjectRecord?> tryFind(UUID id) async => //
       _records.where((it) => it.id == id).firstOrNull;
+
+  Future<ProjectRecord?> tryFindByName(String name) async => //
+      _records.where((it) => it.name == name).firstOrNull;
 
   Future<ProjectRecord?> tryUpdate(UUID id, ProjectFields fields) async {
     final record = ProjectRecord.fromFields(fields, id: id);

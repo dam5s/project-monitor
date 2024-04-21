@@ -43,6 +43,15 @@ extension ResultExtensions<T, E> on Result<T, E> {
         Err(error: _) => null,
       };
 
+  T orThrow() {
+    switch (this) {
+      case Ok(:final value):
+        return value;
+      case Err(:final error):
+        throw 'Expected result to be Ok, got $error';
+    }
+  }
+
   bool isOk() => switch (this) {
         Ok(value: _) => true,
         Err(error: _) => false,
