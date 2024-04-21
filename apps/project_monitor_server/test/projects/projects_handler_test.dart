@@ -2,21 +2,13 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:prelude/prelude.dart';
-import 'package:project_monitor_server/projects/project_record.dart';
 import 'package:project_monitor_server/projects/projects_repo.dart';
 import 'package:test/test.dart';
 
+import '../test_matchers.dart';
+import '../test_scenarios.dart';
 import '../test_server.dart';
 
-extension TestScenarios on TestServer {
-  Future<List<ProjectRecord>> loadSomeProjects() async {
-    final repo = dependencies.projects;
-    return [
-      (await repo.tryCreate(ProjectFields(name: 'Project #0'))).orThrow(),
-      (await repo.tryCreate(ProjectFields(name: 'Project #1'))).orThrow(),
-    ];
-  }
-}
 
 void main() {
   late TestServer server;
@@ -80,16 +72,18 @@ void main() {
 
       expect(createResponse?.statusCode, equals(HttpStatus.created));
       expect(createResponse?.headers['content-type'], equals('application/json'));
-      final responseJson = jsonDecode(createResponse?.body ?? '');
-      expect(responseJson['id'] is String, equals(true));
-      final createdId = responseJson['id'] as String;
-      final createdUuid = UUID.tryFromString(createdId);
-      expect(createdUuid, isNotNull);
 
-      final showResponse = await server.get('/projects/$createdId');
+      final responseJson = jsonDecode(createResponse?.body ?? '');
+      expect(responseJson['id'], isUUIDString());
+      expect(responseJson['name'], equals('My Project'));
+
+      final createdId = UUID.tryFromString(responseJson['id'] as String)!;
+
+      final showResponse = await server.get('/projects/${createdId.value}');
       expect(showResponse?.statusCode, equals(HttpStatus.ok));
 
-      final createdProject = await repo.tryFind(createdUuid!);
+      final createdProject = await repo.tryFind(createdId);
+      expect(createdProject?.id, createdId);
       expect(createdProject?.name, equals('My Project'));
     });
 

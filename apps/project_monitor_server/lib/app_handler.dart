@@ -4,9 +4,9 @@ import 'package:shelf_router/shelf_router.dart';
 
 import 'app_dependencies.dart';
 
-Future<Handler> buildAppHandler(AppDependencies dependencies) async {
+Future<Handler> appHandler(AppDependencies dependencies) async {
   final router = Router();
-  router.mount("/projects", await buildProjectsHandler(dependencies.projects));
+  router.mount("/projects", projectsHandler(dependencies.projects));
 
   return const Pipeline() //
       .addMiddleware(logRequests())
