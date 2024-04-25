@@ -36,6 +36,28 @@ final class HttpPost implements HttpRequest {
   HttpPost(this.url, {this.body});
 }
 
+final class HttpDelete implements HttpRequest {
+  @override
+  final String  method = 'DELETE';
+  @override
+  final Uri url;
+  @override
+  final dynamic body = null;
+
+  HttpDelete(this.url);
+}
+
+final class HttpPut implements HttpRequest {
+  @override
+  final String method = 'PUT';
+  @override
+  final Uri url;
+  @override
+  final dynamic body;
+
+  HttpPut(this.url, {this.body});
+}
+
 typedef HttpResult<T> = Result<T, HttpError>;
 typedef HttpFuture<T> = Future<HttpResult<T>>;
 

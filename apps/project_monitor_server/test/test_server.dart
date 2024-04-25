@@ -35,6 +35,12 @@ class TestServer {
   Future<Response?> post(String path, {dynamic body}) async => //
       _request(HttpPost(_url(path), body: body));
 
+  Future<Response?> delete(String path) async => //
+      _request(HttpDelete(_url(path)));
+
+  Future<Response?> put(String path, {dynamic body}) async => //
+      _request(HttpPut(_url(path), body: body));
+
   Future<void> close() {
     return _server.close();
   }

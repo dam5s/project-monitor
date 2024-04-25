@@ -26,7 +26,12 @@ final class ProjectsRepo {
   Future<ProjectRecord?> tryFindByName(String name) async => //
       _records.where((it) => it.name == name).firstOrNull;
 
-  Future<ProjectRecord?> tryUpdate(UUID id, ProjectFields fields) async {
+  Future<Result<ProjectRecord, String>> tryUpdate(UUID id, ProjectFields fields) async {
+    final existing = await tryFindByName(fields.name);
+    if (existing != null && existing.id != id) {
+      return const Err('Project with name already exists');
+    }
+
     final record = ProjectRecord.fromFields(fields, id: id);
 
     var found = false;
@@ -40,7 +45,7 @@ final class ProjectsRepo {
       return it;
     }).toList();
 
-    return found ? record : null;
+    return found ? Ok(record) : const Err('Not found');
   }
 
   Future<void> delete(UUID id) async {
