@@ -2,13 +2,33 @@ import 'package:prelude/prelude.dart';
 
 import 'project_record.dart';
 
+enum ProjectPersistenceError {
+  notFound,
+  nameTooShort,
+  nameAlreadyUsed,
+}
+
+typedef ProjectPersistenceResult = FutureResult<ProjectRecord, ProjectPersistenceError>;
+
 final class ProjectsRepo {
   var _records = List<ProjectRecord>.empty(growable: true);
 
-  Future<Result<ProjectRecord, String>> tryCreate(ProjectFields fields) async {
+  ProjectPersistenceError? _validate(ProjectFields fields) {
+    if (fields.name.length < 3) {
+      return ProjectPersistenceError.nameTooShort;
+    }
+    return null;
+  }
+
+  ProjectPersistenceResult tryCreate(ProjectFields fields) async {
+    final validationErr = _validate(fields);
+    if (validationErr != null) {
+      return Err(validationErr);
+    }
+
     final existing = await tryFindByName(fields.name);
     if (existing != null) {
-      return const Err('Project with name already exists');
+      return const Err(ProjectPersistenceError.nameAlreadyUsed);
     }
 
     final record = ProjectRecord.fromFields(fields);
@@ -26,10 +46,15 @@ final class ProjectsRepo {
   Future<ProjectRecord?> tryFindByName(String name) async => //
       _records.where((it) => it.name == name).firstOrNull;
 
-  Future<Result<ProjectRecord, String>> tryUpdate(UUID id, ProjectFields fields) async {
+  ProjectPersistenceResult tryUpdate(UUID id, ProjectFields fields) async {
+    final validationErr = _validate(fields);
+    if (validationErr != null) {
+      return Err(validationErr);
+    }
+
     final existing = await tryFindByName(fields.name);
     if (existing != null && existing.id != id) {
-      return const Err('Project with name already exists');
+      return const Err(ProjectPersistenceError.nameAlreadyUsed);
     }
 
     final record = ProjectRecord.fromFields(fields, id: id);
@@ -45,7 +70,7 @@ final class ProjectsRepo {
       return it;
     }).toList();
 
-    return found ? Ok(record) : const Err('Not found');
+    return found ? Ok(record) : const Err(ProjectPersistenceError.notFound);
   }
 
   Future<void> delete(UUID id) async {
