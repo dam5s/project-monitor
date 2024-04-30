@@ -8,8 +8,6 @@ final class AppDependencies {
   static final shared = AppDependencies.defaults();
 
   factory AppDependencies.defaults() {
-    return AppDependencies(
-      projects: ProjectsRepo()
-    );
+    return AppDependencies(projects: ProjectsRepo());
   }
 }

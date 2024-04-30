@@ -38,7 +38,7 @@ final class HttpPost implements HttpRequest {
 
 final class HttpDelete implements HttpRequest {
   @override
-  final String  method = 'DELETE';
+  final String method = 'DELETE';
   @override
   final Uri url;
   @override

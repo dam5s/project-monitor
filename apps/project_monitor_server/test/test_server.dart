@@ -23,22 +23,22 @@ class TestServer {
 
   Uri _url(String path) => Uri.parse('http://localhost:${_server.port}$path');
 
-  Future<Response?> _request(HttpRequest request) async =>
+  Future<Response> _request(HttpRequest request) async =>
       _clientProvider.withHttpClient((client) async {
         final result = await client.sendRequest(request);
-        return result.orNull();
+        return result.orThrow();
       });
 
-  Future<Response?> get(String path) async => //
+  Future<Response> get(String path) async => //
       _request(HttpGet(_url(path)));
 
-  Future<Response?> post(String path, {dynamic body}) async => //
+  Future<Response> post(String path, {dynamic body}) async => //
       _request(HttpPost(_url(path), body: body));
 
-  Future<Response?> delete(String path) async => //
+  Future<Response> delete(String path) async => //
       _request(HttpDelete(_url(path)));
 
-  Future<Response?> put(String path, {dynamic body}) async => //
+  Future<Response> put(String path, {dynamic body}) async => //
       _request(HttpPut(_url(path), body: body));
 
   Future<void> close() {

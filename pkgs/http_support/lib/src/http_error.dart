@@ -22,8 +22,8 @@ final class HttpDeserializationError implements HttpError {
 
 extension HttpErrorMessage on HttpError {
   String message() => switch (this) {
-    HttpConnectionError() => 'There was an error connecting',
-    HttpUnexpectedStatusCodeError() => 'Unexpected response from api',
-    HttpDeserializationError() => 'Failed to parse response',
-  };
+        HttpConnectionError() => 'There was an error connecting',
+        HttpUnexpectedStatusCodeError() => 'Unexpected response from api',
+        HttpDeserializationError() => 'Failed to parse response',
+      };
 }

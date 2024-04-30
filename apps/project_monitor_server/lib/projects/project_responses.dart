@@ -23,11 +23,13 @@ Response projectErrorResponse(String error) {
   return Responses.json({'error': error}, code: HttpStatus.badRequest);
 }
 
+typedef _Err = ProjectPersistenceError;
+
 extension ProjectPersistenceResponse on ProjectPersistenceResult {
   Future<Response> toResponse({int? successCode}) async => switch (await this) {
         Ok(value: final record) => projectResponse(record, successCode: successCode),
-        Err(error: ProjectPersistenceError.notFound) => projectResponse(null),
-        Err(error: ProjectPersistenceError.nameTooShort) => projectErrorResponse('Name too short'),
-        Err(error: ProjectPersistenceError.nameAlreadyUsed) => projectErrorResponse('Name already used'),
+        Err(error: _Err.notFound) => projectResponse(null),
+        Err(error: _Err.nameTooShort) => projectErrorResponse('Name too short'),
+        Err(error: _Err.nameAlreadyUsed) => projectErrorResponse('Name already used'),
       };
 }

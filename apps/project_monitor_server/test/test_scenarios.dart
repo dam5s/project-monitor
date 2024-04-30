@@ -4,7 +4,6 @@ import 'package:project_monitor_server/projects/project_record.dart';
 import 'test_server.dart';
 
 extension TestScenarios on TestServer {
-
   Future<ProjectRecord> loadProject({String? name}) async {
     final repo = dependencies.projects;
     final fields = ProjectFields(name: name ?? 'Some Project');
