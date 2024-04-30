@@ -34,7 +34,7 @@ Future<Response> _getProjectHandler(ProjectsRepo repo, Request request, String i
 
 Future<Response> _createProjectHandler(ProjectsRepo repo, Request request) async {
   return request //
-      .tryParse(_decodeFields)
+      .tryDecode(_decodeFields)
       .continueWith(
         (fields) => repo.tryCreate(fields).toResponse(successCode: HttpStatus.created),
       );
@@ -47,7 +47,7 @@ Future<Response> _updateProjectHandler(ProjectsRepo repo, Request request, Strin
   }
 
   return request
-      .tryParse(_decodeFields)
+      .tryDecode(_decodeFields)
       .continueWith((fields) => repo.tryUpdate(projectId, fields).toResponse());
 }
 

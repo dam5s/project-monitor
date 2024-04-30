@@ -7,7 +7,7 @@ import 'package:shelf/shelf.dart';
 import 'responses.dart';
 
 extension RequestJson on Request {
-  FutureResult<T, Response> tryParse<T>(JsonDecode<T> decode) async {
+  FutureResult<T, Response> tryDecode<T>(JsonDecode<T> decode) async {
     try {
       final body = await readAsString();
       final decoder = JsonDecoder.fromString(body);
