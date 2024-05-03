@@ -28,8 +28,17 @@ void main() {
     final response = await server.get('/projects');
 
     final expectedJson = '{"projects":['
-        '{"id":"${projects[0].id.value}","name":"Project #0"},'
-        '{"id":"${projects[1].id.value}","name":"Project #1"}'
+        '{'
+        '"id":"${projects[0].id.value}",'
+        '"name":"Project #0",'
+        '"repoOwner":"org-A",'
+        '"repoName":"project-0"'
+        '},{'
+        '"id":"${projects[1].id.value}",'
+        '"name":"Project #1",'
+        '"repoOwner":"org-B",'
+        '"repoName":"project-1"'
+        '}'
         ']}';
 
     expect(response.statusCode, equals(HttpStatus.ok));
@@ -44,7 +53,12 @@ void main() {
 
       final response = await server.get('/projects/${project0.id.value}');
 
-      final expectedJson = '{"id":"${project0.id.value}","name":"Project #0"}';
+      final expectedJson = '{'
+          '"id":"${project0.id.value}",'
+          '"name":"Project #0",'
+          '"repoOwner":"org-A",'
+          '"repoName":"project-0"'
+          '}';
 
       expect(response.statusCode, equals(HttpStatus.ok));
       expect(response.body, equals(expectedJson));
@@ -68,18 +82,23 @@ void main() {
 
   group('POST /projects', () {
     test('happy path', () async {
-      final response = await server.post('/projects', body: {'name': 'My Project'});
+      final response = await server.post('/projects', body: {
+        'name': 'My Project',
+        'repoOwner': 'my-org',
+        'repoName': 'my-project',
+      });
 
       expect(response.statusCode, equals(HttpStatus.created));
       expect(response.headers['content-type'], equals('application/json'));
 
-      final responseJson = jsonDecode(response.body ?? '');
+      final responseJson = jsonDecode(response.body);
       expect(responseJson['id'], isUUIDString());
       expect(responseJson['name'], equals('My Project'));
 
       final createdId = UUID.tryFromString(responseJson['id'] as String)!;
 
-      final expectedJson = '{"id":"${createdId.value}","name":"My Project"}';
+      final expectedJson =
+          '{"id":"${createdId.value}","name":"My Project","repoOwner":"my-org","repoName":"my-project"}';
       final getResponse = await server.get('/projects/${createdId.value}');
       expect(getResponse.statusCode, equals(HttpStatus.ok));
       expect(getResponse.body, equals(expectedJson));
@@ -113,20 +132,29 @@ void main() {
 
       final response = await server.put(
         '/projects/${project0.id.value}',
-        body: {'name': 'My Updated Project'},
+        body: {
+          'name': 'My Updated Project',
+          'repoOwner': 'my-updated-org',
+          'repoName': 'my-updated-project',
+        },
       );
 
       expect(response.statusCode, equals(HttpStatus.ok));
       expect(response.headers['content-type'], equals('application/json'));
 
-      final expectedJson = '{"id":"${project0.id.value}","name":"My Updated Project"}';
+      final expectedJson = '{'
+          '"id":"${project0.id.value}",'
+          '"name":"My Updated Project",'
+          '"repoOwner":"my-updated-org",'
+          '"repoName":"my-updated-project"'
+          '}';
       expect(response.body, equals(expectedJson));
 
       final project0GetResponse = await server.get('/projects/${project0.id.value}');
       expect(project0GetResponse.body, equals(expectedJson));
 
       final project1GetResponse = await server.get('/projects/${project1.id.value}');
-      expect(jsonDecode(project1GetResponse.body ?? '')['name'], equals('Project #1'));
+      expect(jsonDecode(project1GetResponse.body)['name'], equals('Project #1'));
     });
 
     test('when uuid is invalid', () async {
@@ -141,7 +169,11 @@ void main() {
     test('when project not found', () async {
       final response = await server.put(
         '/projects/9866bea2-5ffe-4e26-9b19-a74ac6d74c3c',
-        body: {'name': 'My Updated Project'},
+        body: {
+          'name': 'My Updated Project',
+          'repoOwner': 'my-updated-org',
+          'repoName': 'my-updated-project',
+        },
       );
 
       expect(response.statusCode, equals(HttpStatus.notFound));
@@ -159,10 +191,10 @@ void main() {
       expect(response.statusCode, equals(HttpStatus.badRequest));
 
       final project0GetResponse = await server.get('/projects/${project0.id.value}');
-      expect(jsonDecode(project0GetResponse.body ?? '')['name'], equals('Project #0'));
+      expect(jsonDecode(project0GetResponse.body)['name'], equals('Project #0'));
 
       final project1GetResponse = await server.get('/projects/${project1.id.value}');
-      expect(jsonDecode(project1GetResponse.body ?? '')['name'], equals('Project #1'));
+      expect(jsonDecode(project1GetResponse.body)['name'], equals('Project #1'));
     });
 
     test('when updating with the same name', () async {
@@ -171,13 +203,22 @@ void main() {
 
       final response = await server.put(
         '/projects/${project0.id.value}',
-        body: {'name': 'Project #0'},
+        body: {
+          'name': 'Project #0',
+          'repoOwner': 'my-updated-org',
+          'repoName': 'my-updated-project',
+        },
       );
 
       expect(response.statusCode, equals(HttpStatus.ok));
       expect(response.headers['content-type'], equals('application/json'));
 
-      final expectedJson = '{"id":"${project0.id.value}","name":"Project #0"}';
+      final expectedJson = '{'
+          '"id":"${project0.id.value}",'
+          '"name":"Project #0",'
+          '"repoOwner":"my-updated-org",'
+          '"repoName":"my-updated-project"'
+          '}';
       expect(response.body, equals(expectedJson));
     });
   });

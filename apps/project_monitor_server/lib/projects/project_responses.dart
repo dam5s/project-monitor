@@ -7,7 +7,12 @@ import 'package:shelf/shelf.dart';
 import 'project_record.dart';
 import 'projects_repo.dart';
 
-dynamic _projectJson(ProjectRecord project) => {'id': project.id.value, 'name': project.name};
+dynamic _projectJson(ProjectRecord project) => {
+      'id': project.id.value,
+      'name': project.name,
+      'repoOwner': project.repoOwner,
+      'repoName': project.repoName,
+    };
 
 Response projectResponse(ProjectRecord? project, {int? successCode}) {
   return project == null

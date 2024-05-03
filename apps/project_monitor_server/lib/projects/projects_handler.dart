@@ -12,7 +12,11 @@ import 'project_responses.dart';
 import 'projects_repo.dart';
 
 ProjectFields _decodeFields(JsonDecoder decoder) {
-  return ProjectFields(name: decoder.field('name'));
+  return ProjectFields(
+    name: decoder.field('name'),
+    repoOwner: decoder.field('repoOwner'),
+    repoName: decoder.field('repoName'),
+  );
 }
 
 Future<Response> _listProjectsHandler(ProjectsRepo repo, Request request) async {
