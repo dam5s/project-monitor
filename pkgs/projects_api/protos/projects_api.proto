@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "io.damo.projectmonitor.projectsapi";
+option java_outer_classname = "ProjectsProto";
+option objc_class_prefix = "PM";
+
+package projectsapi;
+
+service ProjectsApi {
+  rpc ListProjects (ListProjectsRequest) returns (ListProjectsResponse) {}
+}
+
+message ListProjectsRequest {
+}
+
+enum ProjectStatus {
+  Unknown = 0;
+  Running = 1;
+  Success = 2;
+  Failure = 3;
+}
+
+message ProjectInfo {
+  string name = 1;
+  ProjectStatus status = 2;
+}
+
+message ListProjectsResponse {
+  repeated ProjectInfo projects = 1;
+}
