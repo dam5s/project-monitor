@@ -1,0 +1,13 @@
+###
+
+GET https://api.github.com/repos/{{owner}}/{{repo}}/actions/workflows
+Accept: application/vnd.github+json
+Authorization: Bearer {{token}}
+
+###
+
+GET https://api.github.com/repos/{{owner}}/{{repo}}/actions/runs
+Accept: application/vnd.github+json
+Authorization: Bearer {{token}}
+
+###

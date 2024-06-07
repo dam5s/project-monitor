@@ -1,6 +1,7 @@
 # IntelliJ
 .idea
 *.iml
+*.private.env.json
 
 # MacOS
 .DS_Store
