@@ -27,12 +27,11 @@ class ProjectsApiClient extends $grpc.Client {
       ($core.List<$core.int> value) => $0.ListProjectsResponse.fromBuffer(value));
 
   ProjectsApiClient($grpc.ClientChannel channel,
-      {$grpc.CallOptions? options,
-      $core.Iterable<$grpc.ClientInterceptor>? interceptors})
-      : super(channel, options: options,
-        interceptors: interceptors);
+      {$grpc.CallOptions? options, $core.Iterable<$grpc.ClientInterceptor>? interceptors})
+      : super(channel, options: options, interceptors: interceptors);
 
-  $grpc.ResponseFuture<$0.ListProjectsResponse> listProjects($0.ListProjectsRequest request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.ListProjectsResponse> listProjects($0.ListProjectsRequest request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$listProjects, request, options: options);
   }
 }
@@ -51,9 +50,11 @@ abstract class ProjectsApiServiceBase extends $grpc.Service {
         ($0.ListProjectsResponse value) => value.writeToBuffer()));
   }
 
-  $async.Future<$0.ListProjectsResponse> listProjects_Pre($grpc.ServiceCall call, $async.Future<$0.ListProjectsRequest> request) async {
+  $async.Future<$0.ListProjectsResponse> listProjects_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.ListProjectsRequest> request) async {
     return listProjects(call, await request);
   }
 
-  $async.Future<$0.ListProjectsResponse> listProjects($grpc.ServiceCall call, $0.ListProjectsRequest request);
+  $async.Future<$0.ListProjectsResponse> listProjects(
+      $grpc.ServiceCall call, $0.ListProjectsRequest request);
 }

@@ -1,14 +1,15 @@
-import 'dart:io';
-
-import 'package:shelf/shelf_io.dart';
+import 'package:grpc/grpc.dart';
+import 'package:project_monitor_server/projects/projects_api_service.dart';
 
 import 'app_dependencies.dart';
-import 'app_handler.dart';
 
-Future<HttpServer> buildAppServer(AppDependencies dependencies, {required int port}) async {
-  final server = await serve(await appHandler(dependencies), '0.0.0.0', port);
+Future<Server> startAppServer(AppDependencies dependencies, {required int port}) async {
+  final server = Server.create(
+    services: [ProjectsApiService(projects: dependencies.projects)],
+    codecRegistry: CodecRegistry(codecs: const [GzipCodec(), IdentityCodec()]),
+  );
 
-  server.autoCompress = true;
+  await server.serve(port: port);
 
   return server;
 }

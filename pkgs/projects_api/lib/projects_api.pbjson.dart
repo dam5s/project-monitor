@@ -25,9 +25,9 @@ const ProjectStatus$json = {
 };
 
 /// Descriptor for `ProjectStatus`. Decode as a `google.protobuf.EnumDescriptorProto`.
-final $typed_data.Uint8List projectStatusDescriptor = $convert.base64Decode(
-    'Cg1Qcm9qZWN0U3RhdHVzEgsKB1Vua25vd24QABILCgdSdW5uaW5nEAESCwoHU3VjY2VzcxACEg'
-    'sKB0ZhaWx1cmUQAw==');
+final $typed_data.Uint8List projectStatusDescriptor = $convert
+    .base64Decode('Cg1Qcm9qZWN0U3RhdHVzEgsKB1Vua25vd24QABILCgdSdW5uaW5nEAESCwoHU3VjY2VzcxACEg'
+        'sKB0ZhaWx1cmUQAw==');
 
 @$core.Deprecated('Use listProjectsRequestDescriptor instead')
 const ListProjectsRequest$json = {
@@ -35,8 +35,8 @@ const ListProjectsRequest$json = {
 };
 
 /// Descriptor for `ListProjectsRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List listProjectsRequestDescriptor = $convert.base64Decode(
-    'ChNMaXN0UHJvamVjdHNSZXF1ZXN0');
+final $typed_data.Uint8List listProjectsRequestDescriptor =
+    $convert.base64Decode('ChNMaXN0UHJvamVjdHNSZXF1ZXN0');
 
 @$core.Deprecated('Use projectInfoDescriptor instead')
 const ProjectInfo$json = {
@@ -48,9 +48,9 @@ const ProjectInfo$json = {
 };
 
 /// Descriptor for `ProjectInfo`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List projectInfoDescriptor = $convert.base64Decode(
-    'CgtQcm9qZWN0SW5mbxISCgRuYW1lGAEgASgJUgRuYW1lEjIKBnN0YXR1cxgCIAEoDjIaLnByb2'
-    'plY3RzYXBpLlByb2plY3RTdGF0dXNSBnN0YXR1cw==');
+final $typed_data.Uint8List projectInfoDescriptor = $convert
+    .base64Decode('CgtQcm9qZWN0SW5mbxISCgRuYW1lGAEgASgJUgRuYW1lEjIKBnN0YXR1cxgCIAEoDjIaLnByb2'
+        'plY3RzYXBpLlByb2plY3RTdGF0dXNSBnN0YXR1cw==');
 
 @$core.Deprecated('Use listProjectsResponseDescriptor instead')
 const ListProjectsResponse$json = {
@@ -61,7 +61,6 @@ const ListProjectsResponse$json = {
 };
 
 /// Descriptor for `ListProjectsResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List listProjectsResponseDescriptor = $convert.base64Decode(
-    'ChRMaXN0UHJvamVjdHNSZXNwb25zZRI0Cghwcm9qZWN0cxgBIAMoCzIYLnByb2plY3RzYXBpLl'
-    'Byb2plY3RJbmZvUghwcm9qZWN0cw==');
-
+final $typed_data.Uint8List listProjectsResponseDescriptor = $convert
+    .base64Decode('ChRMaXN0UHJvamVjdHNSZXNwb25zZRI0Cghwcm9qZWN0cxgBIAMoCzIYLnByb2plY3RzYXBpLl'
+        'Byb2plY3RJbmZvUghwcm9qZWN0cw==');

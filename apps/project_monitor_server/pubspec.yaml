@@ -6,12 +6,11 @@ environment:
 
 dependencies:
   prelude: 0.0.0
-  http_support: 0.0.0
-  shelf: ^1.4.1
-  shelf_hotreload: ^1.5.0
-  shelf_router: ^1.1.4
+  projects_api: 0.0.0
+  logging: ^1.2.0
+  grpc: ^3.2.4
+  hotreloader: ^4.2.0
 
 dev_dependencies:
   flutter_lints: ^3.0.0
-  http: ^1.2.1
   test: ^1.24.0

@@ -22,7 +22,7 @@ dependencies:
   flutter:
     sdk: flutter
   prelude: 0.0.0
-  http_support: 0.0.0
+  async_support: 0.0.0
 
 dev_dependencies:
   flutter_lints: ^3.0.0

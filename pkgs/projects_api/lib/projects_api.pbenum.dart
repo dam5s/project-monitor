@@ -19,7 +19,7 @@ class ProjectStatus extends $pb.ProtobufEnum {
   static const ProjectStatus Success = ProjectStatus._(2, _omitEnumNames ? '' : 'Success');
   static const ProjectStatus Failure = ProjectStatus._(3, _omitEnumNames ? '' : 'Failure');
 
-  static const $core.List<ProjectStatus> values = <ProjectStatus> [
+  static const $core.List<ProjectStatus> values = <ProjectStatus>[
     Unknown,
     Running,
     Success,
@@ -31,6 +31,5 @@ class ProjectStatus extends $pb.ProtobufEnum {
 
   const ProjectStatus._($core.int v, $core.String n) : super(v, n);
 }
-
 
 const _omitEnumNames = $core.bool.fromEnvironment('protobuf.omit_enum_names');

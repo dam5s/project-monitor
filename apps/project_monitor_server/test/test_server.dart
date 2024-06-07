@@ -1,47 +1,36 @@
 import 'dart:async';
-import 'dart:io';
 
-import 'package:http/http.dart';
-import 'package:http_support/http_support.dart';
-import 'package:prelude/prelude.dart';
+import 'package:grpc/grpc.dart';
 import 'package:project_monitor_server/app_dependencies.dart';
 import 'package:project_monitor_server/app_server.dart';
+import 'package:projects_api/projects_api.pbgrpc.dart';
 
 class TestServer {
   final AppDependencies dependencies;
+  final Server _server;
+  final ClientChannel _clientChannel;
 
-  final HttpServer _server;
-  final HttpClientProvider _clientProvider = ConcreteHttpClientProvider();
-
-  TestServer._(this._server, this.dependencies);
+  TestServer._(this._server, this._clientChannel, this.dependencies);
 
   static Future<TestServer> start() async {
     final dependencies = AppDependencies.defaults();
-    final server = await buildAppServer(dependencies, port: 0);
-    return TestServer._(server, dependencies);
+    final server = await startAppServer(dependencies, port: 0);
+
+    final clientChannel = ClientChannel(
+      'localhost',
+      port: server.port ?? 0,
+      options: ChannelOptions(
+        credentials: const ChannelCredentials.insecure(),
+        codecRegistry: CodecRegistry(codecs: const [GzipCodec(), IdentityCodec()]),
+      ),
+    );
+
+    return TestServer._(server, clientChannel, dependencies);
   }
 
-  Uri _url(String path) => Uri.parse('http://localhost:${_server.port}$path');
-
-  Future<Response> _request(HttpRequest request) async =>
-      _clientProvider.withHttpClient((client) async {
-        final result = await client.sendRequest(request);
-        return result.orThrow();
-      });
-
-  Future<Response> get(String path) async => //
-      _request(HttpGet(_url(path)));
-
-  Future<Response> post(String path, {dynamic body}) async => //
-      _request(HttpPost(_url(path), body: body));
-
-  Future<Response> delete(String path) async => //
-      _request(HttpDelete(_url(path)));
-
-  Future<Response> put(String path, {dynamic body}) async => //
-      _request(HttpPut(_url(path), body: body));
+  ProjectsApiClient projectsApiClient() => ProjectsApiClient(_clientChannel);
 
   Future<void> close() {
-    return _server.close();
+    return _server.shutdown();
   }
 }

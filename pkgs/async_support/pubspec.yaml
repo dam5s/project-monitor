@@ -1,13 +1,11 @@
-name: http_support
+name: async_support
 publish_to: none
 
 environment:
   sdk: ^3.3.0
 
 dependencies:
-  prelude: 0.0.0
-  http: ^1.2.1
-  logger: ^2.2.0
+  # Nothing yet
 
 dev_dependencies:
   flutter_lints: ^3.0.0

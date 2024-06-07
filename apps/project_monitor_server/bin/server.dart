@@ -1,16 +1,28 @@
 import 'dart:io';
+import 'dart:developer';
 
+import 'package:grpc/grpc.dart';
+import 'package:logging/logging.dart';
 import 'package:project_monitor_server/app_dependencies.dart';
 import 'package:project_monitor_server/app_server.dart';
-import 'package:shelf_hotreload/shelf_hotreload.dart';
+import 'package:project_monitor_server/with_hotreload.dart';
 
-Future<HttpServer> _startServer() async {
+Future<Server> _startServer() async {
+  Logger.root.level = Platform.environment['DEBUG_LOG'] == 'true' ? Level.FINE : Level.INFO;
+  Logger.root.onRecord.listen((record) {
+    log(
+      record.message,
+      time: record.time,
+      level: record.level.value,
+      name: record.loggerName,
+    );
+  });
+
   final dependencies = AppDependencies.shared;
   final port = int.tryParse(Platform.environment['PORT'] ?? '8080') ?? 8080;
+  final server = await startAppServer(dependencies, port: port);
 
-  final server = await buildAppServer(dependencies, port: port);
-
-  print('Serving at http://${server.address.host}:${server.port}');
+  stdout.writeln('Serving at http://localhost:${server.port}');
 
   return server;
 }

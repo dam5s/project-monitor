@@ -8,7 +8,6 @@ dependencies:
   async: ^2.11.0
   grpc: ^3.2.4
   protobuf: ^3.1.0
-  # none
 
 dev_dependencies:
-  # none
+  test: ^1.24.0
