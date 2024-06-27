@@ -7,8 +7,9 @@ import 'package:project_monitor_server/app_dependencies.dart';
 import 'package:project_monitor_server/app_server.dart';
 import 'package:project_monitor_server/with_hotreload.dart';
 
-Future<Server> _startServer() async {
-  Logger.root.level = Platform.environment['DEBUG_LOG'] == 'true' ? Level.FINE : Level.INFO;
+Future<Server> _startServer(AppDependencies dependencies) async {
+  Logger.root.level =
+      Platform.environment['DEBUG_LOG'] == 'true' ? Level.FINE : Level.INFO;
   Logger.root.onRecord.listen((record) {
     log(
       record.message,
@@ -18,11 +19,11 @@ Future<Server> _startServer() async {
     );
   });
 
-  final dependencies = AppDependencies.shared;
+  final logger = Logger('server');
   final port = int.tryParse(Platform.environment['PORT'] ?? '8080') ?? 8080;
   final server = await startAppServer(dependencies, port: port);
 
-  stdout.writeln('Serving at http://localhost:${server.port}');
+  logger.info('Serving at http://localhost:${server.port}');
 
   return server;
 }
@@ -30,9 +31,21 @@ Future<Server> _startServer() async {
 Future<void> main() async {
   final useHotreload = Platform.environment['USE_HOTRELOAD'] == 'true';
 
+  final dependencies = AppDependencies.defaults();
+  final runner = dependencies.runner;
+  final loader = dependencies.loader;
+  final updater = dependencies.updater;
+
+  await loader.loadInitialProjects();
+
+  runner.runPeriodically(
+    callback: updater.run,
+    every: Duration(seconds: 10),
+  );
+
   if (useHotreload) {
-    withHotreload(() => _startServer());
+    withHotreload(() => _startServer(dependencies));
   } else {
-    await _startServer();
+    await _startServer(dependencies);
   }
 }

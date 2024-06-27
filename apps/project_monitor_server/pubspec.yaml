@@ -5,11 +5,14 @@ environment:
   sdk: ^3.3.0
 
 dependencies:
-  prelude: 0.0.0
-  projects_api: 0.0.0
-  logging: ^1.2.0
+  async: ^2.11.0
+  async_support: 0.0.0
   grpc: ^3.2.4
   hotreloader: ^4.2.0
+  logging: ^1.2.0
+  networking_support: 0.0.0
+  prelude: 0.0.0
+  projects_api: 0.0.0
 
 dev_dependencies:
   flutter_lints: ^3.0.0
