@@ -1,4 +1,4 @@
-.PHONY: setup check
+.PHONY: setup codegen check
 
 setup:
 	dart pub get
@@ -6,10 +6,13 @@ setup:
 	dart pub global activate protoc_plugin
 	melos bootstrap
 
-generate-protos:
-	cd pkgs/projects_api/protos; protoc --dart_out=grpc:../lib projects_api.proto
+codegen:
+	melos run protoc --no-select
+	melos run build_runner --no-select
+	melos run format
 
 check:
-	melos run format
+	melos run format -- --set-exit-if-changed
+	make codegen
 	melos test
 	melos run cyclic_dependency_checks

@@ -15,5 +15,9 @@ build
 .pub-cache
 .pub
 
+# Codegen
+*.freezed.dart
+*.pb*.dart
+
 # Melos
 pubspec_overrides.yaml

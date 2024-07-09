@@ -6,6 +6,7 @@ packages:
 
 command:
   bootstrap:
+    usePubspecOverrides: true
     environment:
       sdk: ^3.3.0
 
@@ -15,10 +16,17 @@ command:
 
 scripts:
   format:
-    run: dart format . --line-length 100 --set-exit-if-changed
+    run: dart format . --line-length 100
 
-  install:
-    exec: flutter pub get
+  protoc:
+    exec: cd protos && protoc --dart_out=grpc:../lib *.proto
+    packageFilters:
+      dirExists: protos
+
+  build_runner:
+    exec: dart run build_runner build
+    packageFilters:
+      dependsOn: build_runner
 
   test:
     exec: flutter test
