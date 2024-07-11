@@ -25,7 +25,7 @@ final class AppDependencies {
       projects: projectsRepo,
       runner: PeriodicRunner(),
       loader: ProjectsConfigLoader(projects: projectsRepo),
-      updater: ProjectsStatusUpdater(projects: projectsRepo)
+      updater: ProjectsStatusUpdater(projects: projectsRepo),
     );
   }
 }

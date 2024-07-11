@@ -29,6 +29,17 @@ final class JsonDecoder {
     return decode(JsonDecoder.fromValue(value));
   }
 
+  /// This throws if the value for the field is not of type T or the decode call fails
+  T? optionalField<T>(String name, {JsonDecode<T?>? decode}) {
+    final value = _values[name];
+
+    if (decode == null) {
+      return value as T?;
+    }
+
+    return decode(JsonDecoder.fromValue(value));
+  }
+
   /// This throws if the field is not an array of objects that match the decoder
   Iterable<T> objectArray<T>(String name, JsonDecode<T> decode) {
     return (_values[name] as JsonArray<dynamic>)

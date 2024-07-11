@@ -27,6 +27,11 @@ class UUID {
 
   @override
   int get hashCode => value.hashCode;
+
+  @override
+  String toString() {
+    return 'UUID{value: $value}';
+  }
 }
 
 final _v4Format = RegExp(r'^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}$');

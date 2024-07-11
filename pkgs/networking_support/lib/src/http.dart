@@ -43,13 +43,11 @@ extension ResponseHandling on HttpResult<Response> {
           _logger.warning(
             "Unexpected status code, expected $expected, got ${response.statusCode}",
           );
-          return Err(
-              HttpUnexpectedStatusCodeError(expected, response.statusCode));
+          return Err(HttpUnexpectedStatusCodeError(expected, response.statusCode));
         }
       });
 
-  HttpFuture<T> tryParseJson<T>(JsonDecode<T> decode,
-      {required AsyncCompute async}) async {
+  HttpFuture<T> tryParseJson<T>(JsonDecode<T> decode, {required AsyncCompute async}) async {
     return switch (this) {
       Ok(value: final response) => async.compute(
           (response) {

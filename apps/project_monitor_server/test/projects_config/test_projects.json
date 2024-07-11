@@ -1,0 +1,7 @@
+{
+  "defaultApiKey": "some-default-key",
+  "projects": [
+    {"name":  "Project Monitor", "repoOwner":  "dam5s", "repoName":  "project-monitor", "apiKey": "some-project-key"},
+    {"name":  "SoManyFeeds", "repoOwner":  "dam5s", "repoName":  "somanyfeeds.fs"}
+  ]
+}

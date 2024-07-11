@@ -1,18 +1,24 @@
-import 'package:prelude/prelude.dart';
 import 'package:project_monitor_server/projects/project_record.dart';
 
 import 'test_server.dart';
 
 extension TestScenarios on TestServer {
-  Future<ProjectRecord> loadProject({String? name, String? repoOwner, String? repoName}) async {
+  Future<ProjectRecord> loadProject({
+    String? name,
+    String? repoOwner,
+    String? repoName,
+    String? apiKey,
+  }) {
     final repo = dependencies.projects;
+
     final fields = ProjectFields(
       name: name ?? 'Some Project',
       repoOwner: repoOwner ?? 'some-owner',
       repoName: repoName ?? 'some-project',
+      apiKey: apiKey ?? 'some-api-key',
     );
 
-    return (await repo.tryCreate(fields)).orThrow();
+    return repo.create(fields);
   }
 
   Future<List<ProjectRecord>> loadSomeProjects() async {

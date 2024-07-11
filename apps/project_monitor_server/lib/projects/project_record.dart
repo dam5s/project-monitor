@@ -1,33 +1,33 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:prelude/prelude.dart';
 
-final class ProjectFields {
-  final String name;
-  final String repoOwner;
-  final String repoName;
+part 'project_record.freezed.dart';
 
-  ProjectFields({
-    required this.name,
-    required this.repoOwner,
-    required this.repoName,
-  });
+@freezed
+class ProjectFields with _$ProjectFields {
+  const factory ProjectFields({
+    required String name,
+    required String repoOwner,
+    required String repoName,
+    required String apiKey,
+  }) = _ProjectFields;
 }
 
-final class ProjectRecord extends ProjectFields {
-  final UUID id;
+@freezed
+class ProjectRecord with _$ProjectRecord {
+  const factory ProjectRecord({
+    required UUID id,
+    required String name,
+    required String repoOwner,
+    required String repoName,
+    required String apiKey,
+  }) = _ProjectRecord;
 
-  ProjectRecord({
-    required this.id,
-    required super.name,
-    required super.repoOwner,
-    required super.repoName,
-  });
-
-  factory ProjectRecord.fromFields(ProjectFields fields, {UUID? id}) {
-    return ProjectRecord(
-      id: id ?? UUID.v4(),
-      name: fields.name,
-      repoName: fields.repoName,
-      repoOwner: fields.repoOwner,
-    );
-  }
+  factory ProjectRecord.fromFields(ProjectFields fields, {required UUID id}) => ProjectRecord(
+        id: id,
+        name: fields.name,
+        repoOwner: fields.repoOwner,
+        repoName: fields.repoName,
+        apiKey: fields.apiKey,
+      );
 }

@@ -8,8 +8,7 @@ import 'package:project_monitor_server/app_server.dart';
 import 'package:project_monitor_server/with_hotreload.dart';
 
 Future<Server> _startServer(AppDependencies dependencies) async {
-  Logger.root.level =
-      Platform.environment['DEBUG_LOG'] == 'true' ? Level.FINE : Level.INFO;
+  Logger.root.level = Platform.environment['DEBUG_LOG'] == 'true' ? Level.FINE : Level.INFO;
   Logger.root.onRecord.listen((record) {
     log(
       record.message,
@@ -36,7 +35,7 @@ Future<void> main() async {
   final loader = dependencies.loader;
   final updater = dependencies.updater;
 
-  await loader.loadInitialProjects();
+  await loader.load();
 
   runner.runPeriodically(
     callback: updater.run,
