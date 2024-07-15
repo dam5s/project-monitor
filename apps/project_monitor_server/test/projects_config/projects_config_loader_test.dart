@@ -1,7 +1,7 @@
 import 'package:prelude/prelude.dart';
 import 'package:project_monitor_server/projects/project_record.dart';
 import 'package:project_monitor_server/projects/projects_repo.dart';
-import 'package:project_monitor_server/projects_config/projects_loader.dart';
+import 'package:project_monitor_server/projects_config/projects_config_loader.dart';
 import 'package:test/test.dart';
 
 class TestUUIDGen {

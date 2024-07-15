@@ -1,6 +1,6 @@
 import 'package:async_support/async_support.dart';
 import 'package:project_monitor_server/projects/projects_repo.dart';
-import 'package:project_monitor_server/projects_config/projects_loader.dart';
+import 'package:project_monitor_server/projects_config/projects_config_loader.dart';
 import 'package:project_monitor_server/projects_status/projects_status_updater.dart';
 
 final class AppDependencies {
