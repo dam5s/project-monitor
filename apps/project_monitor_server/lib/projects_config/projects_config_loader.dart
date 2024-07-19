@@ -11,7 +11,7 @@ class ProjectsConfigLoader {
   ProjectsConfigLoader({required this.projects});
 
   Future<void> load({String? filePath}) async {
-    filePath ??= "projects.json";
+    filePath ??= 'projects.json';
 
     final jsonString = await File(filePath).readAsString();
     final decoder = JsonDecoder.fromString(jsonString);
@@ -22,7 +22,7 @@ class ProjectsConfigLoader {
         name: projectConfig.name,
         repoOwner: projectConfig.repoOwner,
         repoName: projectConfig.repoName,
-        apiKey: projectConfig.apiKey ?? config.defaultApiKey ?? "",
+        apiKey: projectConfig.apiKey ?? config.defaultApiKey ?? '',
       ));
     }
   }

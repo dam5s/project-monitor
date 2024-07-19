@@ -29,7 +29,7 @@ extension SendRequest on Client {
 
       return Ok(response);
     } on Exception catch (e) {
-      _logger.warning("Exception during request $method $url", e);
+      _logger.warning('Exception during request $method $url', e);
       return Err(HttpConnectionError(e));
     }
   }
@@ -41,7 +41,7 @@ extension ResponseHandling on HttpResult<Response> {
           return Ok(response);
         } else {
           _logger.warning(
-            "Unexpected status code, expected $expected, got ${response.statusCode}",
+            'Unexpected status code, expected $expected, got ${response.statusCode}',
           );
           return Err(HttpUnexpectedStatusCodeError(expected, response.statusCode));
         }

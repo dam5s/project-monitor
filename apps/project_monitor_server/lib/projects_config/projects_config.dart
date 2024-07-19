@@ -20,15 +20,17 @@ final class ProjectsConfig {
 
   ProjectsConfig({this.defaultApiKey, required this.projects});
 
-  factory ProjectsConfig.fromJson(JsonDecoder decoder) => ProjectsConfig(
-        defaultApiKey: decoder.field("defaultApiKey"),
-        projects: decoder.objectArray("projects", decodeProjectFields),
+  factory ProjectsConfig.fromJson(JsonDecoder decoder) => //
+      ProjectsConfig(
+        defaultApiKey: decoder.field('defaultApiKey'),
+        projects: decoder.objectArray('projects', decodeProjectFields),
       );
 }
 
-ProjectConfig decodeProjectFields(JsonDecoder decoder) => ProjectConfig(
-      name: decoder.field("name"),
-      repoOwner: decoder.field("repoOwner"),
-      repoName: decoder.field("repoName"),
-      apiKey: decoder.optionalField("apiKey"),
+ProjectConfig decodeProjectFields(JsonDecoder decoder) => //
+    ProjectConfig(
+      name: decoder.field('name'),
+      repoOwner: decoder.field('repoOwner'),
+      repoName: decoder.field('repoName'),
+      apiKey: decoder.optionalField('apiKey'),
     );

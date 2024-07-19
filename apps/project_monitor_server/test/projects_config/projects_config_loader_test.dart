@@ -23,7 +23,7 @@ void main() {
     final repo = new ProjectsRepo(uuidGenerator: uuidGen.generate);
     final loader = new ProjectsConfigLoader(projects: repo);
 
-    await loader.load(filePath: "test/projects_config/test_projects.json");
+    await loader.load(filePath: 'test/projects_config/test_projects.json');
 
     final loadedProjects = await repo.findAll();
 
@@ -33,17 +33,17 @@ void main() {
       containsAll([
         ProjectRecord(
           id: uuidGen.ids[0],
-          name: "Project Monitor",
-          repoOwner: "dam5s",
-          repoName: "project-monitor",
-          apiKey: "some-project-key",
+          name: 'Project Monitor',
+          repoOwner: 'dam5s',
+          repoName: 'project-monitor',
+          apiKey: 'some-project-key',
         ),
         ProjectRecord(
           id: uuidGen.ids[1],
-          name: "SoManyFeeds",
-          repoOwner: "dam5s",
-          repoName: "somanyfeeds.fs",
-          apiKey: "some-default-key",
+          name: 'SoManyFeeds',
+          repoOwner: 'dam5s',
+          repoName: 'somanyfeeds.fs',
+          apiKey: 'some-default-key',
         ),
       ]),
     );
