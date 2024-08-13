@@ -2,7 +2,7 @@ name: project_monitor_server
 publish_to: none
 
 environment:
-  sdk: ^3.3.0
+  sdk: ^3.4.0
 
 dependencies:
   async: ^2.11.0
@@ -19,5 +19,7 @@ dependencies:
 dev_dependencies:
   freezed: ^2.5.4
   flutter_lints: ^4.0.0
-  test: ^1.24.0
+  test: ^1.25.0
   build_runner: ^2.4.11
+  shelf: ^1.4.2
+  shelf_router: ^1.1.4
