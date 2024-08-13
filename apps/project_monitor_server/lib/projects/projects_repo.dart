@@ -17,7 +17,4 @@ final class ProjectsRepo {
 
   Future<Iterable<ProjectRecord>> findAll() async => //
       _records.unmodifiable();
-
-  Future<ProjectRecord?> tryFind(UUID id) async => //
-      _records.where((it) => it.id == id).firstOrNull;
 }

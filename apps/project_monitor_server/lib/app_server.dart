@@ -8,7 +8,9 @@ Future<Server> startAppServer(
   required int port,
 }) async {
   final server = Server.create(
-    services: [ProjectsApiService(projects: dependencies.projects)],
+    services: [
+      ProjectsApiService(projects: dependencies.projects),
+    ],
     codecRegistry: CodecRegistry(codecs: const [GzipCodec(), IdentityCodec()]),
   );
 
