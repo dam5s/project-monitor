@@ -13,10 +13,10 @@ void main() {
   });
 
   test('UUID.tryFromString when not a uuid', () {
-    final invalidCharacters = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx';
-    final notV4 = '2b0bf6fb-565c-12d4-be77-3a057c5ac121';
-    final tooLong = '2b0bf6fb-565c-42d4-be77-3a057c5ac121a';
-    final tooShort = '2b0bf6fb-565c-42d4-be77-3a057c5ac12';
+    const invalidCharacters = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx';
+    const notV4 = '2b0bf6fb-565c-12d4-be77-3a057c5ac121';
+    const tooLong = '2b0bf6fb-565c-42d4-be77-3a057c5ac121a';
+    const tooShort = '2b0bf6fb-565c-42d4-be77-3a057c5ac12';
 
     expect(UUID.tryFromString(invalidCharacters), equals(null));
     expect(UUID.tryFromString(notV4), equals(null));

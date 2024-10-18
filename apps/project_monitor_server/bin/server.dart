@@ -39,7 +39,7 @@ Future<void> main() async {
 
   runner.runPeriodically(
     callback: updater.run,
-    every: Duration(seconds: 10),
+    every: const Duration(seconds: 10),
   );
 
   if (useHotreload) {

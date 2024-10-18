@@ -20,8 +20,8 @@ class TestUUIDGen {
 void main() {
   test('loadInitialProjects', () async {
     final uuidGen = TestUUIDGen(size: 2);
-    final repo = new ProjectsRepo(uuidGenerator: uuidGen.generate);
-    final loader = new ProjectsConfigLoader(projects: repo);
+    final repo = ProjectsRepo(uuidGenerator: uuidGen.generate);
+    final loader = ProjectsConfigLoader(projects: repo);
 
     await loader.load(filePath: 'test/projects_config/test_projects.json');
 

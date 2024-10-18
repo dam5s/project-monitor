@@ -5,7 +5,7 @@ import 'project_record.dart';
 final class ProjectsRepo {
   final UUID Function() idGenerator;
 
-  ProjectsRepo({UUID Function()? uuidGenerator}) : this.idGenerator = uuidGenerator ?? UUID.v4;
+  ProjectsRepo({UUID Function()? uuidGenerator}) : idGenerator = uuidGenerator ?? UUID.v4;
 
   var _records = List<ProjectRecord>.empty(growable: true);
 
@@ -17,7 +17,4 @@ final class ProjectsRepo {
 
   Future<Iterable<ProjectRecord>> findAll() async => //
       _records.unmodifiable();
-
-  Future<ProjectRecord?> tryFind(UUID id) async => //
-      _records.where((it) => it.id == id).firstOrNull;
 }

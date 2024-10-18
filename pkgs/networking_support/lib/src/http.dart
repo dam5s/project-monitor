@@ -21,9 +21,16 @@ typedef HttpResult<T> = Result<T, HttpError>;
 typedef HttpFuture<T> = Future<HttpResult<T>>;
 
 extension SendRequest on Client {
-  HttpFuture<Response> sendRequest(HttpMethod method, Uri url) async {
+  HttpFuture<Response> sendRequest(
+    HttpMethod method,
+    Uri url, {
+    Map<String, String>? headers,
+  }) async {
     try {
-      final request = Request(method.toString(), url)..followRedirects = false;
+      final request = Request(method.toString(), url)
+        ..followRedirects = false
+        ..headers.addAll(headers ?? {});
+
       final streamedResponse = await send(request);
       final response = await Response.fromStream(streamedResponse);
 
