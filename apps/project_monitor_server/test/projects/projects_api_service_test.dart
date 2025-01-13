@@ -2,14 +2,14 @@ import 'package:projects_api/projects_api.pbgrpc.dart';
 import 'package:test/test.dart';
 
 import '../test_scenarios.dart';
-import '../test_server.dart';
+import '../test_app_server.dart';
 
 void main() {
-  late TestServer server;
+  late TestAppServer server;
   late ProjectsApiClient client;
 
   setUp(() async {
-    server = await TestServer.start();
+    server = await TestAppServer.start();
     client = server.projectsApiClient();
   });
 

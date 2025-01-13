@@ -1,8 +1,8 @@
 import 'package:project_monitor_server/projects/project_record.dart';
 
-import 'test_server.dart';
+import 'test_app_server.dart';
 
-extension TestScenarios on TestServer {
+extension TestScenarios on TestAppServer {
   Future<ProjectRecord> loadProject({
     String? name,
     String? repoOwner,

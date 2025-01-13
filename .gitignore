@@ -21,3 +21,6 @@ build
 
 # Melos
 pubspec_overrides.yaml
+
+# Project config
+projects.json
