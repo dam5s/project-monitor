@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:http/http.dart';
 
 abstract class HttpClientProvider {
-  Future<T> withHttpClient<T>(FutureOr<T> Function(Client client) block);
+  FutureOr<T> withHttpClient<T>(FutureOr<T> Function(Client client) block);
 }
 
 class ConcreteHttpClientProvider implements HttpClientProvider {
