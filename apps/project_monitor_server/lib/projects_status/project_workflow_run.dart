@@ -10,7 +10,7 @@ enum ProjectWorkflowRunStatus {
 }
 
 @freezed
-class ProjectWorkflowRun with _$ProjectWorkflowRun {
+abstract class ProjectWorkflowRun with _$ProjectWorkflowRun {
   const factory ProjectWorkflowRun({
     required ProjectRecord project,
     required int id,

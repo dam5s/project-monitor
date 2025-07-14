@@ -4,7 +4,7 @@ import 'package:prelude/prelude.dart';
 part 'project_record.freezed.dart';
 
 @freezed
-class ProjectFields with _$ProjectFields {
+abstract class ProjectFields with _$ProjectFields {
   const factory ProjectFields({
     required String name,
     required String repoOwner,
@@ -14,7 +14,7 @@ class ProjectFields with _$ProjectFields {
 }
 
 @freezed
-class ProjectRecord with _$ProjectRecord {
+abstract class ProjectRecord with _$ProjectRecord {
   const factory ProjectRecord({
     required UUID id,
     required String name,

@@ -1,13 +1,12 @@
-name: projects_api
+name: project_monitor_cli
 publish_to: none
 
 environment:
   sdk: ^3.4.0
 
 dependencies:
-  async: ^2.11.0
-  grpc: ^4.0.0
-  protobuf: ^4.1.0
+  projects_api: 0.0.0
+  grpc: ^4.0.1
 
 dev_dependencies:
   test: ^1.25.0
