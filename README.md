@@ -2,8 +2,8 @@
 
 ## Dependencies
 
- * Flutter 3.19
- * Protoc 26.1 (for code generation only)
+ * Flutter 3.29
+ * Protoc 29.3 (for code generation only)
 
 ## Running the build
 
